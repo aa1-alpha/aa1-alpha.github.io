@@ -1,0 +1,59 @@
+name: Telemetry Logging Workflow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  send_telemetry:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout repository
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Set up environment variables for debugging
+      - name: Set up environment variables
+        run: |
+          echo "GITHUB_RUN_ID: $GITHUB_RUN_ID"
+          echo "CONCLUSION: $CONCLUSION"
+          echo "GITHUB_REPOSITORY: $GITHUB_REPOSITORY"
+
+      # Send telemetry to GitHub API
+      - name: Send telemetry data to GitHub API
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_RUN_ID: ${{ github.run_id }}
+          CONCLUSION: success  # You can modify this to dynamic values based on your workflow
+        run: |
+          echo "Sending telemetry data..."
+
+          # Debug: Check the values being used for the API request
+          echo "GITHUB_RUN_ID: $GITHUB_RUN_ID"
+          echo "CONCLUSION: $CONCLUSION"
+          echo "GITHUB_REPOSITORY: $GITHUB_REPOSITORY"
+
+          # Try to send the API request using curl
+          response=$(curl -s -w "%{http_code}" -o response.json \
+            -X POST \
+            -H "Authorization: Bearer $GITHUB_TOKEN" \
+            -H "Content-Type: application/json" \
+            -d "{\"github_run_id\": \"$GITHUB_RUN_ID\", \"conclusion\": \"$CONCLUSION\"}" \
+            "https://api.github.com/repos/$GITHUB_REPOSITORY/pages/telemetry")
+
+          # Extract HTTP status code from the response
+          http_code=$(echo "$response" | tail -n1)
+          response_body=$(cat response.json)
+
+          # Print out the response for debugging
+          echo "HTTP Status Code: $http_code"
+          echo "Response Body: $response_body"
+
+          # Check if the request was successful
+          if [ "$http_code" -ne 200 ]; then
+            echo "Error: API request failed with status code $http_code"
+            exit 1
+          else
+            echo "Telemetry data sent successfully!"
+          fi
