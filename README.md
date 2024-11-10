@@ -1,1 +1,1 @@
-This is just a test, it is not supposerd to be taken seriously
+This is just a test, it is not supposed to be taken seriously
