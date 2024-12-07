@@ -47,9 +47,8 @@
   <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
 
   <script>
-    // Initialize EmailJS with your public key
-    emailjs.init(" IVTnc1OVcxgGXooux
-"); // Replace with your EmailJS Public Key
+    // Initialize EmailJS with your user ID
+    emailjs.init("IVTnc1OVcxgGXooux");  // Your User ID
 
     // Handle form submission
     document.getElementById("emailForm").addEventListener("submit", function(event) {
@@ -66,8 +65,7 @@
       };
 
       // Send the form data to both the admin and the user using the same template
-      emailjs.send("service_ixa44su
-", "template_i6jiyxa", formData)
+      emailjs.send("service_ixa44su", "template_i6jiyxa", formData)
         .then(function(response) {
           console.log("Email sent successfully:", response);
           document.getElementById("responseMessage").textContent = "Emails sent successfully!";
@@ -79,6 +77,8 @@
   </script>
 </body>
 </html>
+
+
 
 
     
