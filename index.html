@@ -60,6 +60,13 @@
       var destination = document.getElementById("destination").value;
       var email = document.getElementById("email").value;
 
+      // Email validation regex (basic format check)
+      var emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      if (!emailPattern.test(email)) {
+        document.getElementById("responseMessage").textContent = "Please enter a valid email address.";
+        return;  // Exit the function if the email is not valid
+      }
+
       var formData = {
         name: name,
         destination: destination,
