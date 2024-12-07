@@ -1,5 +1,4 @@
-
-     <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -45,11 +44,13 @@
   </div>
 
   <!-- Include the EmailJS JavaScript SDK -->
-  <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
-  <script>
-    // Initialize EmailJS with your public key
-    emailjs.init("OoQi5-N99oSSYjhh9");  // Your User ID
+  <script type="text/javascript">
+    (function() {
+      // Initialize EmailJS with your public user key
+      emailjs.init("OoQi5-N99oSSYjhh9");  // Replace with your actual EmailJS public user ID
+    })();
 
     // Handle form submission
     document.getElementById("emailForm").addEventListener("submit", function(event) {
@@ -66,22 +67,21 @@
       };
 
       // Send email to admin
-      emailjs.send("service_gtweha7", "template_mj32895", formData)
+      emailjs.send("service_gtweha7", "", formData)  // Replace with your actual service ID and template ID
         .then(function(response) {
           console.log("Admin email sent successfully:", response);
         }, function(error) {
           console.error("Error sending admin email:", error);
         });
 
-      // Send email to user (use "Reply To" to send a confirmation email to user)
-      var userEmail = email;
+      // Send email to user
       var userMessage = {
         name: name,
         destination: destination,
-        email: userEmail
+        email: email
       };
 
-      emailjs.send("service_gtweha7", "template_mj32895", userMessage)
+      emailjs.send("service_gtweha7", "template_mj32895", userMessage)  // Replace with your actual service ID and template ID
         .then(function(response) {
           console.log("User email sent successfully:", response);
           document.getElementById("responseMessage").textContent = "Emails sent successfully!";
@@ -93,7 +93,6 @@
   </script>
 </body>
 </html>
-
 
 
     
