@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+
+     <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -47,7 +48,7 @@
   <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
 
   <script>
-    // Initialize EmailJS with your user ID
+    // Initialize EmailJS with your public key
     emailjs.init("IVTnc1OVcxgGXooux");  // Your User ID
 
     // Handle form submission
@@ -64,20 +65,34 @@
         email: email
       };
 
-      // Send the form data to both the admin and the user using the same template
+      // Send email to admin
       emailjs.send("service_ixa44su", "template_i6jiyxa", formData)
         .then(function(response) {
-          console.log("Email sent successfully:", response);
+          console.log("Admin email sent successfully:", response);
+        }, function(error) {
+          console.error("Error sending admin email:", error);
+        });
+
+      // Send email to user (use "Reply To" to send a confirmation email to user)
+      var userEmail = email;
+      var userMessage = {
+        name: name,
+        destination: destination,
+        email: userEmail
+      };
+
+      emailjs.send("service_ixa44su", "template_i6jiyxa", userMessage)
+        .then(function(response) {
+          console.log("User email sent successfully:", response);
           document.getElementById("responseMessage").textContent = "Emails sent successfully!";
         }, function(error) {
-          console.error("Error sending email:", error);
+          console.error("Error sending user email:", error);
           document.getElementById("responseMessage").textContent = "Error sending emails.";
         });
     });
   </script>
 </body>
 </html>
-
 
 
 
