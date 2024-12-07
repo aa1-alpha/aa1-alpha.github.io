@@ -38,6 +38,7 @@
       <input type="text" id="name" name="name" placeholder="Your Name" required><br>
       <input type="text" id="destination" name="destination" placeholder="Destination" required><br>
       <input type="email" id="email" name="email" placeholder="Your Email Address" required><br>
+      <input type="email" id="confirm_email" name="confirm_email" placeholder="Confirm Email Address" required><br>
       <button type="submit">Submit</button>
     </form>
     <p id="responseMessage"></p>
@@ -59,12 +60,13 @@
       var name = document.getElementById("name").value;
       var destination = document.getElementById("destination").value;
       var email = document.getElementById("email").value;
+      var confirmEmail = document.getElementById("confirm_email").value;
 
-      // Email validation regex (basic format check)
-      var emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-      if (!emailPattern.test(email)) {
-        document.getElementById("responseMessage").textContent = "Please enter a valid email address.";
-        return;  // Exit the function if the email is not valid
+      // Check if emails match
+      if (email !== confirmEmail) {
+        console.log("Confirm email doesn't match the email. Please reload the form and fill it again.");
+        document.getElementById("responseMessage").textContent = "Email addresses do not match. Please try again.";
+        return; // Exit the function early if emails don't match
       }
 
       var formData = {
@@ -102,4 +104,4 @@
 </html>
 
 
-    
+      
