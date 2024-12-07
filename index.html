@@ -69,12 +69,10 @@
         return; // Exit the function early if emails don't match
       }
 
-      var formData = {
-        name: name,
-        destination: destination,
-        email: email
-      };
-
+      // Disable the submit button to prevent multiple submissions
+      var submitButton = document.querySelector('button[type="submit"]');
+      submitButton.disabled = true;
+      submitButton.textContent = "Submitting...";
 
       // Send email to user
       var userMessage = {
@@ -90,11 +88,15 @@
         }, function(error) {
           console.error("Error sending user email:", error);
           document.getElementById("responseMessage").textContent = "Error sending emails.";
+        })
+        .finally(function() {
+          // Re-enable the submit button after email is sent
+          submitButton.disabled = false;
+          submitButton.textContent = "Submit";
         });
     });
   </script>
 </body>
 </html>
-
 
       
