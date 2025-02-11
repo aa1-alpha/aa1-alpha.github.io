@@ -69,32 +69,17 @@
       submitButton.disabled = true;
       submitButton.textContent = "Submitting...";
 
-      // Email parameters for the recipient
-      var userParams = {
+      var templateParams = {
         name: name,
         needed_thing: neededThing,
-        to_email: email
+        to_email: ${email}, agarwalaudvik@gmail.com  // 🔹 Sends email to both user & you
       };
 
-      // Email parameters for yourself
-      var adminParams = {
-        name: name,
-        needed_thing: neededThing,
-        to_email: "agarwalaudvik@gmail.com"
-      };
-
-      // Send email to the user first
-      emailjs.send("service_gtweha7", "template_mj32895", userParams)
+      emailjs.send("service_gtweha7", "template_mj32895", templateParams)
         .then(function(response) {
-          console.log("User email sent:", response);
-          return emailjs.send("service_gtweha7", "template_mj32895", adminParams);
-        })
-        .then(function(response) {
-          console.log("Admin email sent:", response);
           document.getElementById("responseMessage").textContent = "Emails sent successfully!";
         })
         .catch(function(error) {
-          console.error("Error:", error);
           document.getElementById("responseMessage").textContent = "Error sending emails.";
         })
         .finally(function() {
@@ -106,4 +91,5 @@
 </body>
 </html>
 
+  
 
