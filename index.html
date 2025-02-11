@@ -69,42 +69,41 @@
       submitButton.disabled = true;
       submitButton.textContent = "Submitting...";
 
-      // First email to the user
+      // Email parameters for the recipient
       var userParams = {
         name: name,
         needed_thing: neededThing,
-        to_email: email  // Sends to the user
+        to_email: email
       };
 
-      // Second email to yourself
+      // Email parameters for yourself
       var adminParams = {
         name: name,
         needed_thing: neededThing,
-        to_email: "agarwalaudvik@gmail.com"  // Sends to you
+        to_email: "agarwalaudvik@gmail.com"
       };
 
       // Send email to the user first
       emailjs.send("service_gtweha7", "template_mj32895", userParams)
-      .then(function(response) {
-        console.log("User email sent:", response);
-
-        // Now send email to yourself
-        return emailjs.send("service_gtweha7", "template_mj32895", adminParams);
-      })
-      .then(function(response) {
-        console.log("Admin email sent:", response);
-        document.getElementById("responseMessage").textContent = "Emails sent successfully!";
-      })
-      .catch(function(error) {
-        console.error("Error sending emails:", error);
-        document.getElementById("responseMessage").textContent = "Error sending emails.";
-      })
-      .finally(function() {
-        submitButton.disabled = false;
-        submitButton.textContent = "Submit";
-      });
+        .then(function(response) {
+          console.log("User email sent:", response);
+          return emailjs.send("service_gtweha7", "template_mj32895", adminParams);
+        })
+        .then(function(response) {
+          console.log("Admin email sent:", response);
+          document.getElementById("responseMessage").textContent = "Emails sent successfully!";
+        })
+        .catch(function(error) {
+          console.error("Error:", error);
+          document.getElementById("responseMessage").textContent = "Error sending emails.";
+        })
+        .finally(function() {
+          submitButton.disabled = false;
+          submitButton.textContent = "Submit";
+        });
     });
   </script>
 </body>
 </html>
+
 
