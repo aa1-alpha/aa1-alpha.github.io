@@ -76,10 +76,25 @@
         confirm_email: confirmEmail
       };
 
+      // Send email to the user
       emailjs.send("service_gtweha7", "template_mj32895", templateParams)
         .then(function(response) {
+          console.log("User email sent successfully:", response);
+          
+          // Send email to yourself
+          return emailjs.send("service_gtweha7", "template_mj32895", {
+            name: name,
+            needed_thing: neededThing,
+            email: "your-email@example.com" // Replace with your actual email
+          });
+
+        })
+        .then(function(response) {
+          console.log("Your email sent successfully:", response);
           document.getElementById("responseMessage").textContent = "Emails sent successfully!";
-        }, function(error) {
+        })
+        .catch(function(error) {
+          console.error("Error sending emails:", error);
           document.getElementById("responseMessage").textContent = "Error sending emails.";
         })
         .finally(function() {
@@ -90,4 +105,5 @@
   </script>
 </body>
 </html>
+
 
