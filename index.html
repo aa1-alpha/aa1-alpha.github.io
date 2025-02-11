@@ -36,7 +36,7 @@
   <div class="form-container">
     <form id="emailForm">
       <input type="text" id="name" name="name" placeholder="Your Name" required><br>
-      <input type="text" id="destination" name="destination" placeholder="Destination" required><br>
+      <input type="text" id="needed_thing" name="needed_thing" placeholder="What do you need?" required><br>
       <input type="email" id="email" name="email" placeholder="Your Email Address" required><br>
       <input type="email" id="confirm_email" name="confirm_email" placeholder="Confirm Email Address" required><br>
       <button type="submit">Submit</button>
@@ -49,48 +49,40 @@
 
   <script type="text/javascript">
     (function() {
-      // Initialize EmailJS with your public user key
       emailjs.init("OoQi5-N99oSSYjhh9");  // Replace with your actual EmailJS public user ID
     })();
 
-    // Handle form submission
     document.getElementById("emailForm").addEventListener("submit", function(event) {
-      event.preventDefault();  // Prevent the form from submitting normally
+      event.preventDefault();
 
       var name = document.getElementById("name").value;
-      var destination = document.getElementById("destination").value;
+      var neededThing = document.getElementById("needed_thing").value;
       var email = document.getElementById("email").value;
       var confirmEmail = document.getElementById("confirm_email").value;
 
-      // Check if emails match
       if (email !== confirmEmail) {
-        console.log("Confirm email doesn't match the email. Please reload the form and fill it again.");
         document.getElementById("responseMessage").textContent = "Email addresses do not match. Please try again.";
-        return; // Exit the function early if emails don't match
+        return;
       }
 
-      // Disable the submit button to prevent multiple submissions
       var submitButton = document.querySelector('button[type="submit"]');
       submitButton.disabled = true;
       submitButton.textContent = "Submitting...";
 
-      // Send email to user
-      var userMessage = {
+      var templateParams = {
         name: name,
-        destination: destination,
-        email: email
+        needed_thing: neededThing,
+        email: email,
+        confirm_email: confirmEmail
       };
 
-      emailjs.send("service_gtweha7", "template_mj32895", userMessage)  // Replace with your actual service ID and template ID
+      emailjs.send("service_gtweha7", "template_mj32895", templateParams)
         .then(function(response) {
-          console.log("User email sent successfully:", response);
           document.getElementById("responseMessage").textContent = "Emails sent successfully!";
         }, function(error) {
-          console.error("Error sending user email:", error);
           document.getElementById("responseMessage").textContent = "Error sending emails.";
         })
         .finally(function() {
-          // Re-enable the submit button after email is sent
           submitButton.disabled = false;
           submitButton.textContent = "Submit";
         });
@@ -99,4 +91,3 @@
 </body>
 </html>
 
-      
